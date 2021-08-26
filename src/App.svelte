@@ -1,7 +1,7 @@
 <!-- Draggable.svelte -->
 <script lang="ts">
   import Draggable from "./Draggable.svelte";
-  import { selectedObj } from "./stores";
+  import { selectedObj, objInfo } from "./stores";
 
   let objNum = 3;
   let objs = [];
@@ -40,6 +40,11 @@
 <input type="text" bind:value={objNum} />
 <button on:click={setComponents}>적용</button>
 <button on:click={addComponent}>오브젝트 추가</button>
+<button
+  on:click={() => {
+    console.log($objInfo);
+  }}>오브젝트 정보</button
+>
 <div
   id="viewport"
   on:click|self={() => {

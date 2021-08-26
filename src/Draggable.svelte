@@ -1,7 +1,7 @@
 <!-- Draggable.svelte -->
 <script lang="ts">
-  import { afterUpdate } from "svelte";
-  import { selectedObj } from "./stores";
+  import { afterUpdate, onMount } from "svelte";
+  import { selectedObj, objInfo } from "./stores";
 
   export let left = 30;
   export let top = 30;
@@ -46,6 +46,12 @@
         left += e.movementX;
         top += e.movementY;
       }
+      $objInfo["obj" + objId.toString()] = {
+        left: left,
+        top: top,
+        width: width,
+        height: height,
+      };
     }
   }
 
@@ -63,6 +69,15 @@
     resizing = true;
     selectedHandle = e.target.id;
   }
+
+  onMount(() => {
+    $objInfo["obj" + objId.toString()] = {
+      left: left,
+      top: top,
+      width: width,
+      height: height,
+    };
+  });
 
   afterUpdate(async () => {
     select();
