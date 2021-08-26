@@ -25,16 +25,16 @@
   function move(e) {
     if (moving) {
       if (resizing) {
-        if (selectedHandle == "top-left-handle") {
+        if (selectedHandle === "top-left-handle") {
           width -= e.movementX;
           height -= e.movementY;
           left += e.movementX;
           top += e.movementY;
-        } else if (selectedHandle == "top-right-handle") {
+        } else if (selectedHandle === "top-right-handle") {
           width += e.movementX;
           height -= e.movementY;
           top += e.movementY;
-        } else if (selectedHandle == "bottom-left-handle") {
+        } else if (selectedHandle === "bottom-left-handle") {
           width -= e.movementX;
           height += e.movementY;
           left += e.movementX;
@@ -66,13 +66,20 @@
 
   afterUpdate(async () => {
     select();
-    console.log(resizing);
   });
 </script>
 
 <svelte:window
   on:click={() => {
-    if ($selectedObj != "handles" + objId.toString()) selected = false;
+    if ($selectedObj !== "handles" + objId.toString()) {
+      selected = false;
+    }
+    if ($selectedObj === "none") {
+      selected = false;
+    }
+  }}
+  on:click|self={() => {
+    selected = false;
   }}
   on:mouseup={stop}
   on:mousemove={move}
@@ -83,7 +90,7 @@
   on:click={(e) => {
     //e.stopPropagation();
     $selectedObj = "handles" + objId.toString();
-    selected = true;
+    selected = !selected;
   }}
   style="left: {left}px; top: {top}px; width: {width}px; height: {height}px;"
   id="draggable"

@@ -1,10 +1,16 @@
 <!-- Draggable.svelte -->
 <script lang="ts">
   import Draggable from "./Draggable.svelte";
+  import { selectedObj } from "./stores";
 </script>
 
 <h1>drag object test</h1>
-<div id="viewport">
+<div
+  id="viewport"
+  on:click|self={() => {
+    $selectedObj = "none";
+  }}
+>
   <Draggable left={50} top={50} objId={1}>
     <h1>Drag Me 1</h1>
   </Draggable>
