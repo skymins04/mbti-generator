@@ -1,7 +1,7 @@
 <!-- Draggable.svelte -->
 <script lang="ts">
   import { afterUpdate, onMount } from "svelte";
-  import { selectedObj, objInfo } from "./stores";
+  import { selectedObj, objInfo, ctrlKey } from "./stores";
 
   export let left = 30;
   export let top = 30;
@@ -70,6 +70,10 @@
     selectedHandle = e.target.id;
   }
 
+  function ctrlKeyState(e) {
+    $ctrlKey = e.ctrlKey;
+  }
+
   onMount(() => {
     $objInfo["obj" + objId.toString()] = {
       left: left,
@@ -85,11 +89,13 @@
 </script>
 
 <svelte:window
+  on:keydown={ctrlKeyState}
+  on:keyup={ctrlKeyState}
   on:click={() => {
-    if ($selectedObj !== "handles" + objId.toString()) {
+    if ($selectedObj !== "handles" + objId.toString() && !$ctrlKey) {
       selected = false;
     }
-    if ($selectedObj === "none") {
+    if ($selectedObj === "none" && !$ctrlKey) {
       selected = false;
     }
   }}
