@@ -2,32 +2,61 @@
 <script lang="ts">
   import Draggable from "./Draggable.svelte";
   import { selectedObj } from "./stores";
+
+  let objNum = 3;
+  let objs = [];
+
+  function getRandom(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  function setComponents() {
+    objs = [];
+    for (let i = 0; i < objNum; i++) {
+      objs.push({
+        left: getRandom(0, 300),
+        top: getRandom(0, 300),
+        width: 50,
+        height: 50,
+      });
+    }
+    objs = objs;
+  }
+
+  function addComponent() {
+    objs.push({
+      left: getRandom(0, 300),
+      top: getRandom(0, 300),
+      width: 50,
+      height: 50,
+    });
+    objs = objs;
+  }
+
+  setComponents();
 </script>
 
 <h1>drag object test</h1>
+<input type="text" bind:value={objNum} />
+<button on:click={setComponents}>적용</button>
+<button on:click={addComponent}>오브젝트 추가</button>
 <div
   id="viewport"
   on:click|self={() => {
     $selectedObj = "none";
   }}
 >
-  <Draggable left={50} top={50} objId={1}>
-    <h1>Drag Me 1</h1>
-  </Draggable>
-
-  <Draggable left={300} top={50} objId={2}>
-    <h1>Drag Me 2</h1>
-  </Draggable>
-
-  <Draggable left={50} top={300} objId={3}>
-    <h1>Drag Me 3</h1>
-  </Draggable>
+  {#each objs as { left, top, width, height }, i}
+    <Draggable {left} {top} {width} {height} objId={i}>
+      <h1>{i}</h1>
+    </Draggable>
+  {/each}
 </div>
 
 <style>
   #viewport {
-    width: 800px;
-    height: 500px;
+    width: 90%;
+    height: 80%;
     margin: 10px;
     border: 1px solid #ccc;
     position: relative;

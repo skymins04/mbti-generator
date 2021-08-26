@@ -87,8 +87,7 @@
 
 <section
   on:mousedown={start}
-  on:click={(e) => {
-    //e.stopPropagation();
+  on:click={() => {
     $selectedObj = "handles" + objId.toString();
     selected = !selected;
   }}
@@ -111,6 +110,9 @@
     position: absolute;
     border: 1px solid gray;
     cursor: move;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   #draggable > div {
