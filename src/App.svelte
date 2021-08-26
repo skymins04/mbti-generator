@@ -1,3 +1,4 @@
+<!-- Draggable.svelte -->
 <script lang="ts">
   import Draggable from "./Draggable.svelte";
 </script>
@@ -25,13 +26,6 @@
     border: 1px solid #ccc;
     position: relative;
     box-shadow: 0 0 3px 3px #ccc inset;
-  } /*
-  #block {
-    cursor: pointer;
-    width: 50px;
-    height: 50px;
-    background-color: coral;
-    border-radius: 10px;
-    position: absolute;
-  }*/
+    overflow: hidden;
+  }
 </style>

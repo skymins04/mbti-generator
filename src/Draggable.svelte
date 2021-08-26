@@ -1,5 +1,7 @@
+<!-- Draggable.svelte -->
 <script lang="ts">
   import { afterUpdate } from "svelte";
+  import { selectedObj } from "./stores";
 
   export let left = 30;
   export let top = 30;
@@ -36,7 +38,6 @@
           width -= e.movementX;
           height += e.movementY;
           left += e.movementX;
-          //top += e.movementY;
         } else {
           width += e.movementX;
           height += e.movementY;
@@ -71,7 +72,7 @@
 
 <svelte:window
   on:click={() => {
-    selected = false;
+    if ($selectedObj != "handles" + objId.toString()) selected = false;
   }}
   on:mouseup={stop}
   on:mousemove={move}
@@ -80,7 +81,8 @@
 <section
   on:mousedown={start}
   on:click={(e) => {
-    e.stopPropagation();
+    //e.stopPropagation();
+    $selectedObj = "handles" + objId.toString();
     selected = true;
   }}
   style="left: {left}px; top: {top}px; width: {width}px; height: {height}px;"
